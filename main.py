@@ -3,9 +3,9 @@ import torch
 def prepare_words() -> list:
     return [w.lower() for w in open('polish_names.txt', 'r', encoding="utf8").read().splitlines()]
 
-def create_probability_matrix(N: torch.tensor) -> torch.Tensor:
+def create_probability_matrix(N: torch.tensor, dimension: int) -> torch.Tensor:
     P = N.float()
-    P /= P.sum(2, keepdim=True)
+    P /= P.sum(dimension, keepdim=True)
     P = torch.nan_to_num(P)
     return P
 
@@ -16,7 +16,7 @@ def prepare_mappings(words: list) -> tuple:
     itos = {i:s for s,i in stoi.items()}
     return stoi, itos
 
-def trigram(word_length=None):
+def trigram(word_length=None, word_count=100, seed=2147483641):
     words = prepare_words()
 
     stoi, itos = prepare_mappings(words)
@@ -31,9 +31,9 @@ def trigram(word_length=None):
             ix3 = stoi[ch3]
             N[ix1, ix2, ix3] += 1
 
-    P = create_probability_matrix(N)
-    g = torch.Generator().manual_seed(2147483641)
-    words_left = 100
+    P = create_probability_matrix(N, 2)
+    g = torch.Generator().manual_seed(seed)
+    words_left = word_count
     while words_left > 0:
         out = []
         indexes = []
