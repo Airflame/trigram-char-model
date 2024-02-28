@@ -44,7 +44,7 @@ def bigram():
                 break
         print(''.join(out))
 
-def trigram(show_plot=False):
+def trigram(show_plot=False, word_length=None):
     words = prepare_words()
 
     stoi, itos = prepare_mappings(words)
@@ -71,8 +71,9 @@ def trigram(show_plot=False):
         plt.show()
 
     P = create_probability_matrix(N)
-    g = torch.Generator().manual_seed(2147483643)
-    for i in range(100):
+    g = torch.Generator().manual_seed(2147483641)
+    words_left = 100
+    while words_left > 0:
         out = []
         indexes = []
         ix = 0
@@ -88,7 +89,10 @@ def trigram(show_plot=False):
             indexes.append(ix)
             if ix == 0:
                 break
-        print(''.join(out))
+        word = ''.join(out)
+        if word_length is None or len(word) == word_length:
+            words_left -= 1
+            print(word)
 
 if __name__ == "__main__":
-    trigram()
+    trigram(word_length=8)
