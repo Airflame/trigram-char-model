@@ -5,7 +5,7 @@ def strip_accents(s) -> str:
     return s.replace('ą', 'a').replace('ć', 'c').replace('ę', 'e').replace('ł', 'l').replace('ń', 'n').replace('ó', 'o').replace('ś', 's').replace('ż', 'z').replace('ź', 'z')
 
 def prepare_words() -> list:
-    return [strip_accents(w.lower()) for w in open('rename.txt', 'r', encoding="utf8").read().splitlines()]
+    return [strip_accents(w.lower()) for w in open('polish_names.txt', 'r', encoding="utf8").read().splitlines()]
 
 def create_probability_matrix(N: torch.tensor) -> torch.Tensor:
     P = N.float()
