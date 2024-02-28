@@ -38,14 +38,11 @@ def trigram(word_length=None):
         out = []
         indexes = []
         ix = 0
-        p = P[0, ix]
-        ix = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
-        out.append(itos[ix])
-        indexes.append(ix)
-        p = P[0, ix]
-        ix = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
-        out.append(itos[ix])
-        indexes.append(ix)
+        for i in range(2):
+            p = P[0, ix]
+            ix = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
+            out.append(itos[ix])
+            indexes.append(ix)
         while True:
             p = P[indexes[-2], indexes[-1]]
             ix = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
