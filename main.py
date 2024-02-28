@@ -12,6 +12,7 @@ def create_probability_matrix(N: torch.tensor) -> torch.Tensor:
     P /= P.sum(1, keepdim=True)
     P = torch.nan_to_num(P)
     return P
+
 def prepare_mappings(words: list) -> tuple:
     chars = sorted(list(set(''.join(words))))
     stoi = {s:i+1 for i,s in enumerate(chars)}
