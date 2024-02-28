@@ -20,20 +20,19 @@ def prepare_mappings(words: list) -> tuple:
     itos = {i:s for s,i in stoi.items()}
     return stoi, itos
 
-def bigram(show_plot=False):
+def bigram():
     words = prepare_words()
 
     stoi, itos = prepare_mappings(words)
     l = len(stoi)
 
-    if show_plot:
-        N = torch.zeros((l, l), dtype=torch.int32)
-        for w in words:
-            chs = ['.'] + list(w) + ['.']
-            for ch1, ch2 in zip(chs, chs[1:]):
-                ix1 = stoi[ch1]
-                ix2 = stoi[ch2]
-                N[ix1, ix2] += 1
+    N = torch.zeros((l, l), dtype=torch.int32)
+    for w in words:
+        chs = ['.'] + list(w) + ['.']
+        for ch1, ch2 in zip(chs, chs[1:]):
+            ix1 = stoi[ch1]
+            ix2 = stoi[ch2]
+            N[ix1, ix2] += 1
 
     P = create_probability_matrix(N)
     g = torch.Generator().manual_seed(2147483647)
