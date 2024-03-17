@@ -9,6 +9,7 @@ def is_selected_gender(word: str, gender: str) -> bool:
 def format_as_name(word: str) -> str:
     word = word.replace('.', '')
     return word[0].upper() + word[1:]
+
 def prepare_words() -> list:
     return [w.lower() for w in open('polish_names.txt', 'r', encoding="utf8").read().splitlines()]
 
